@@ -1,31 +1,12 @@
-import { useState, useEffect } from "react";
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:3001");
+import { useState } from "react";
 
 const PlayerAdder = ({ setInitList }) => {
-  const [formInput, setFormInput] = useState({ name: "", init: "", mod: 0 });
-
-  useEffect(() => {
-    socket.on("player-added", ({ newPlayerWithId }) => {
-      setInitList((currInitList) => {
-        return [newPlayerWithId, ...currInitList];
-      });
-      setFormInput({ name: "", init: "", mod: "0" });
-    });
-  }, [socket]);
-
+  const [formInput, setFormInput] = useState({ name: "", init: "", mod: "" });
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newPlayer = {
-      name: formInput.name,
-      initiative: parseInt(formInput.init) + parseInt(formInput.mod),
-      id: socket.id,
-    };
-    socket.emit("add-player", { newPlayer });
     setInitList((currInitList) => {
-      return [newPlayer, ...currInitList];
+      const newPlayer = {};
     });
-    setFormInput({ name: "", init: "", mod: "0" });
   };
 
   const handleChange = (event, key) => {
@@ -38,9 +19,8 @@ const PlayerAdder = ({ setInitList }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Name</label>
+      <label for="name">Name</label>
       <input
-        required
         type="text"
         id="name"
         value={formInput.name}
@@ -48,11 +28,8 @@ const PlayerAdder = ({ setInitList }) => {
           handleChange(event, "name");
         }}
       ></input>
-      <br />
-      <label htmlFor="init">Init</label>
-
+      <label for="init">Init</label>
       <input
-        required
         type="text"
         id="init"
         value={formInput.init}
@@ -60,10 +37,8 @@ const PlayerAdder = ({ setInitList }) => {
           handleChange(event, "init");
         }}
       ></input>
-      <br />
-      <label htmlFor="mod">Modifier</label>
+      <label for="mod">Modifier</label>
       <input
-        placeholder="0"
         type="text"
         id="mod"
         value={formInput.mod}
@@ -71,7 +46,6 @@ const PlayerAdder = ({ setInitList }) => {
           handleChange(event, "mod");
         }}
       ></input>
-      <br />
       <button type="submit">Submit</button>
     </form>
   );

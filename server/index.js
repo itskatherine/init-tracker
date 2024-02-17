@@ -14,11 +14,11 @@ const io = new Server(server, {
 });
 app.use(cors());
 io.on("connection", (socket) => {
-  console.log(`User ${socket.id} has connected`);
-
-  socket.on("send-message", (data) => {
-    console.log(data);
-    socket.broadcast.emit("recieve-message", data)
+  const { id } = socket;
+  console.log(`User ${id} has connected`);
+  socket.on("add-player", ({ newPlayer }) => {
+    const newPlayerWithId = { ...newPlayer, id };
+    socket.broadcast.emit("player-added", { newPlayerWithId });
   });
 });
 

@@ -1,8 +1,8 @@
 const PlayerCard = ({ player }) => {
-  const { name, initiative } = player;
+  const { name, initiative, id } = player;
   return (
     <div>
-    <strong>{name}</strong>: {initiative},
+      <strong>{name}</strong>: {initiative} id: {id}
     </div>
   );
 };
