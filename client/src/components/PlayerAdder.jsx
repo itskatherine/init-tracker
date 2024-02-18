@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:3001");
 
-const PlayerAdder = ({ setInitList }) => {
+const PlayerAdder = ({ setInitList, socket }) => {
   const [formInput, setFormInput] = useState({ name: "", init: "", mod: 0 });
 
   useEffect(() => {

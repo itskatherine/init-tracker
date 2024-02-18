@@ -1,10 +1,17 @@
 import PlayerCard from "./PlayerCard";
 
-const InitiativeList = ({ initList }) => {
+const InitiativeList = ({ socket, initList, setInitList }) => {
   return (
     <ul>
       {initList.map((player) => {
-        return <PlayerCard player={player} key={player.id}></PlayerCard>;
+        return (
+          <PlayerCard
+            socket={socket}
+            player={player}
+            key={player.id}
+            setInitList={setInitList}
+          ></PlayerCard>
+        );
       })}
     </ul>
   );
